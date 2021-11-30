@@ -39,7 +39,7 @@ fn main() {
 
     // create the initial app state
     let initial_state = HelloState {
-        name: "Mondo".into(),
+        name: "World".into(),
     };
 
     // start the application
