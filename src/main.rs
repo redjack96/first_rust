@@ -1,15 +1,15 @@
-/*
+
 use std::fs::ReadDir;
 use std::fs;
 use std::num::ParseIntError;
-fn main() {
-    // let result: Result<ReadDir, std::io::Error> = fs::read_dir("C://"); // Result<ReadDir>
-    // if result.is_ok() {
-    //     for read_dir in result.unwrap() {
-    //         println!("{}", read_dir.map(|r| r.file_name().into_string().unwrap())
-    //             .unwrap());
-    //     }
-    // }
+fn button_handler() {
+    let result: Result<ReadDir, std::io::Error> = fs::read_dir("."); // Result<ReadDir>
+    if result.is_ok() {
+        for read_dir in result.unwrap() {
+            println!("{}", read_dir.map(|r| r.file_name().into_string().unwrap())
+                .unwrap());
+        }
+    }
     let line = "1\n2\n3\n4\nqqe\n";
     for num in line.lines() {
         match num.parse::<i32>().map(|i| i * 2) {
@@ -17,8 +17,9 @@ fn main() {
             Err(..) => println!("ERRORE")
         }
     }
-}*/
+}
 
+/*ATTENZIONE per linux, serve installare gtk-3 con "sudo apt-get install libgtk-3-dev */
 use druid::widget::{Align, Flex, Label, TextBox};
 use druid::{AppLauncher, Data, Env, Lens, LocalizedString, Widget, WindowDesc, WidgetExt, Command};
 
@@ -61,13 +62,21 @@ fn build_root_widget() -> impl Widget<HelloState> {
         .fix_width(TEXT_BOX_WIDTH)
         .on_click(|_ctx, data: &mut HelloState, _c| println!("{}", data.name));
 
+    let button2 = druid::widget::Button::new("esempio ls")
+        .fix_width(TEXT_BOX_WIDTH)
+        .on_click(|_ctx, data: &mut HelloState, _c| button_handler());
+
     // arrange the two widgets vertically, with some padding
     let layout = Flex::column()
         .with_child(label)
         .with_spacer(VERTICAL_WIDGET_SPACING)
         .with_child(textbox)
         .with_spacer(VERTICAL_WIDGET_SPACING)
-        .with_child(button);
+        .with_child(button)
+        .with_spacer(VERTICAL_WIDGET_SPACING)
+        .with_child(button2);
+
+
 
     // center the two widgets in the available space
     Align::centered(layout) // Senza il ; restituisce questo
